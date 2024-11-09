@@ -13,8 +13,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return view('students.index', compact('students'));
+       
     }
 
     /**
@@ -22,7 +21,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view('students.create');
+        
     }
 
     /**
@@ -30,15 +29,8 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $name = $request->name;
-        $lastname = $request->lastname;
 
-        Student::create([
-            'name' => $name,
-            'lastname' => $lastname
-        ]);
-
-        return redirect()->route('students.index');
+        
 
     }
 
@@ -47,31 +39,30 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        $student = Student::findOrfail($id);
-        return view('students.show',compact('students'));
+        
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        
     }
 }
