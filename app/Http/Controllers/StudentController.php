@@ -13,7 +13,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-       
+        $students = Student::all();
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -21,7 +22,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        
+        return view('students.create');
     }
 
     /**
@@ -30,8 +31,18 @@ class StudentController extends Controller
     public function store(Request $request)
     {
 
-        
+        $request->validate([
+            'name' => 'required',
+            'lastname' => 'required'
+        ]);
 
+        Student::create([
+            'name' => $request->name,
+            'lastname' => $request->lastname
+
+        ]);
+
+        return redirect()->route('students.index')->with('success','Los datos del estudiante se han registrado en la base de datos');
     }
 
     /**
@@ -39,7 +50,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        
+        $student = Student::findOrFail($id);
+        return view('students.show',compact('student'));
     }
 
     /**
@@ -47,7 +59,8 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        
+        $student = Student::findOrFail($id);
+        return view('students.edit',compact('student'));
     }
 
     /**
@@ -56,6 +69,19 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         
+        $request->validate([
+            'name' => 'required',
+            'lastname'=> 'required'
+        ]);
+
+        $student = Student::findOrFail($id);
+
+        $student->update([
+            'name' => $request->name,
+            'lastname' => $request->lastname
+        ]);
+
+        return redirect()->route('students.index')->with('success', 'Los datos del estudiante se han modificado en la base de datos');
     }
 
     /**
@@ -63,6 +89,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        
+       $student = Student::findOrFail($id);
+       $student->delete();
+       return redirect()->route('students.index')->with('success','Los datos del estudiante se han eliminado de la base de datos');
     }
 }
